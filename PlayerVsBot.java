@@ -110,34 +110,6 @@ public class PlayerVsBot {
 
                     boardToShow.printBoard();
                 }
-
-                while(!yourTurn){
-                    System.out.println("Bot's turn to attack ...");
-                    TimeUnit.SECONDS.sleep(2);
-                    String hor = "abcdefghij";
-                    int x = hor.charAt((rnd.nextInt(hor.length()))) - 97;
-                    int y = rnd.nextInt(10);
-                    if (p[y][x] == '#' && p[y][x] != 'X') {
-                        p[y][x] = 'X';
-                        player_board.printBoard(name);
-                        shipsLeft--;
-                        if (playersShipsLeft == 0) {
-                            System.out.println("Game over. Better luck next time");
-                            i = 200;
-                            break;
-                        }
-                        yourTurn = false;
-                    } else if (p[y][x] == '-' && p[y][x] != 'O') {
-                        p[y][x] = 'O';
-                        player_board.printBoard(name);
-                        yourTurn = true;
-                    } else if (p[y][x] == 'O' || p[y][x] == 'X') {
-                        i--;
-                        yourTurn = false;
-                    }
-
-                    boardToShow.printBoard();
-                }
             }
         }
 
