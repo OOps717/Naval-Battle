@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class PlayerImpl {
     private char[][] board;
@@ -12,6 +13,16 @@ public class PlayerImpl {
         }
     }
 
+    public boolean isInteger( String input ) { //Pass in string
+        try { //Try to make the input into an integer
+            Integer.parseInt( input );
+            return true; //Return true if it works
+        }
+        catch( Exception e ) {
+            System.out.println("You should choose from 1-10!");
+            return false; //If it doesn't work return false
+        }
+    }
 
     public void printBoard (String player){
         System.out.println("\nPlayer's" + " " + player + " board");
@@ -32,7 +43,7 @@ public class PlayerImpl {
         }
     }
 
-    public char[][] Play(String player) {
+    public char[][] place(String player) {
         Scanner scan = new Scanner(System.in);
         boolean okay = true;
         int Horizdir = 0;
@@ -83,10 +94,13 @@ public class PlayerImpl {
 
             System.out.println("Nice choice! Now please choose where to start to put");
             System.out.println("Firstly choose on vertical direction (1-10)");
-            int Vertdir = scan.nextInt();
+
+            int Vertdir = -1;
             while (Vertdir < 0 || Vertdir > 10) {
-                System.out.println("You should choose only from 1-10! Try again");
-                Vertdir = scan.nextInt();
+                String l = scan.nextLine();
+                if (isInteger(l)){
+                    Vertdir = Integer.parseInt(l);
+                }
             }
             System.out.println("For now choose on horizontal direction (a-j)");
             char H = scan.next().charAt(0);
