@@ -28,7 +28,7 @@ public class PlayerVsBot {
         Random rnd = new Random();
         Scanner scan = new Scanner(System.in);
         System.out.println("Hey there! Give me your beautiful name");
-        String name = scan.nextLine();
+        String name = scan.next();
 
         player_board.printBoard(name);
 
@@ -50,9 +50,9 @@ public class PlayerVsBot {
                     while (yourTurn) {
                         System.out.println("Your turn to attack. Give the position to attack");
                         System.out.println("On vertical axis (1-10):");
-                        String yAx = scan.nextLine();
+                        String yAx = scan.next();
                         while (!player_board.isInteger(yAx)) {
-                            yAx = scan.nextLine();
+                            yAx = scan.next();
                         }
                         int y = Integer.parseInt(yAx) - 1;
                         System.out.println("On horizontal axis (a-j):");
@@ -69,7 +69,7 @@ public class PlayerVsBot {
                             boardToShow.printBoard();
                             shipsLeft--;
                             if (shipsLeft == 0) {
-                                System.out.println("You has won congrats");
+                                System.out.println("You have won congrats");
                                 i = 200;
                                 break;
                             }
@@ -97,12 +97,7 @@ public class PlayerVsBot {
                         if (p[y][x] == '#' && p[y][x] != 'X') {
                             p[y][x] = 'X';
                             player_board.printBoard(name);
-                            shipsLeft--;
-                            if (playersShipsLeft == 0) {
-                                System.out.println("Game over. Better luck next time");
-                                i = 200;
-                                break;
-                            }
+                            playersShipsLeft--;
                             yourTurn = false;
                         } else if (p[y][x] == '-' && p[y][x] != 'O') {
                             p[y][x] = 'O';
@@ -112,21 +107,25 @@ public class PlayerVsBot {
                             i--;
                             yourTurn = false;
                         }
-
                         boardToShow.printBoard();
+                        if (playersShipsLeft == 0) {
+                            System.out.println("Game over. Better luck next time");
+                            i = 200;
+                            break;
+                        }
                     }
                 }
             }else {
                 for (int i = 0; i < 200; i++) {
                     while (yourTurn) {
                         System.out.println("Your turn to attack. Give the position to attack");
-                        System.out.print("On vertical axis");
-                        String yAx = scan.nextLine();
+                        System.out.println("On vertical axis");
+                        String yAx = scan.next();
                         while (!player_board.isInteger(yAx)) {
-                            yAx = scan.nextLine();
+                            yAx = scan.next();
                         }
                         int y = Integer.parseInt(yAx) - 1;
-                        System.out.println("On horizontal axis (a-j):");
+                        System.out.println("On horizontal axis (a-j)");
                         int x = Character.toLowerCase(scan.next().charAt(0)) - 97;
 
                         if (y > 9 || y < 0 || x > 9 || x < 0) {
@@ -140,7 +139,7 @@ public class PlayerVsBot {
                             boardToShow.printBoard();
                             shipsLeft--;
                             if (shipsLeft == 0) {
-                                System.out.println("You has won congrats");
+                                System.out.println("You have won congrats");
                                 i = 200;
                                 break;
                             }
@@ -161,48 +160,57 @@ public class PlayerVsBot {
                     }
                     while (!yourTurn) {
                         if (yPos != -1 && xPos != -1) {
-                            TimeUnit.SECONDS.sleep(2);
+                            TimeUnit.SECONDS.sleep(1);
                             if (yPos != 9 && p[yPos + 1][xPos] != 'O' && p[yPos + 1][xPos] != 'X' && p[yPos + 1][xPos] == '#') {
                                 yPos = yPos + 1;
                                 p[yPos][xPos] = 'X';
+                                playersShipsLeft--;
                                 player_board.printBoard(name);
                                 yourTurn = false;
                             } else if (yPos != 9 && xPos != 9 && p[yPos + 1][xPos + 1] != 'O' && p[yPos + 1][xPos + 1] != 'X' && p[yPos + 1][xPos + 1] == '#') {
                                 yPos = yPos + 1;
                                 xPos = xPos + 1;
                                 p[yPos][xPos] = 'X';
+                                playersShipsLeft--;
                                 player_board.printBoard(name);
                                 yourTurn = false;
                             } else if (xPos != 9 && p[yPos][xPos + 1] != 'O' && p[yPos][xPos + 1] != 'X' && p[yPos][xPos + 1] == '#') {
                                 xPos = xPos + 1;
                                 p[yPos][xPos] = 'X';
+                                playersShipsLeft--;
                                 player_board.printBoard(name);
                                 yourTurn = false;
                             } else if (yPos != 0 && xPos != 9 && p[yPos - 1][xPos + 1] != 'O' && p[yPos - 1][xPos + 1] != 'X' && p[yPos - 1][xPos + 1] == '#') {
                                 yPos = yPos - 1;
                                 xPos = xPos + 1;
                                 p[yPos][xPos] = 'X';
+                                playersShipsLeft--;
+                                player_board.printBoard(name);
                                 yourTurn = false;
                             } else if (yPos != 9 && xPos != 0 && p[yPos + 1][xPos - 1] != 'O' && p[yPos + 1][xPos - 1] != 'X' && p[yPos + 1][xPos - 1] == '#') {
                                 yPos = yPos + 1;
                                 xPos = xPos - 1;
                                 p[yPos][xPos] = 'X';
+                                playersShipsLeft--;
                                 player_board.printBoard(name);
                                 yourTurn = false;
                             } else if (yPos != 0 && xPos != 0 && p[yPos - 1][xPos - 1] != 'O' && p[yPos - 1][xPos - 1] != 'X' && p[yPos - 1][xPos - 1] == '#') {
                                 yPos = yPos - 1;
                                 xPos = xPos - 1;
                                 p[yPos][xPos] = 'X';
+                                playersShipsLeft--;
                                 player_board.printBoard(name);
                                 yourTurn = false;
                             } else if (xPos != 0 && p[yPos][xPos - 1] != 'O' && p[yPos][xPos - 1] != 'X' && p[yPos][xPos - 1] == '#') {
                                 xPos = xPos - 1;
                                 p[yPos][xPos] = 'X';
+                                playersShipsLeft--;
                                 player_board.printBoard(name);
                                 yourTurn = false;
                             } else if (yPos != 0 && p[yPos - 1][xPos] != 'O' && p[yPos - 1][xPos] != 'X' && p[yPos - 1][xPos] == '#') {
                                 yPos = yPos - 1;
                                 p[yPos][xPos] = 'X';
+                                playersShipsLeft--;
                                 player_board.printBoard(name);
                                 yourTurn = false;
                             } else {
@@ -211,7 +219,7 @@ public class PlayerVsBot {
                             }
                         } else {
                             System.out.println("Bot's turn to attack ...");
-                            TimeUnit.SECONDS.sleep(2);
+                            TimeUnit.SECONDS.sleep(1);
                             String hor = "abcdefghij";
                             int x = hor.charAt((rnd.nextInt(hor.length()))) - 97;
                             int y = rnd.nextInt(10);
@@ -220,12 +228,7 @@ public class PlayerVsBot {
                                 yPos = y;
                                 xPos = x;
                                 player_board.printBoard(name);
-                                shipsLeft--;
-                                if (playersShipsLeft == 0) {
-                                    System.out.println("Game over. Better luck next time");
-                                    i = 200;
-                                    break;
-                                }
+                                playersShipsLeft--;
                                 yourTurn = false;
                             } else if (p[y][x] == '-' && p[y][x] != 'O') {
                                 p[y][x] = 'O';
@@ -233,10 +236,15 @@ public class PlayerVsBot {
                                 yourTurn = true;
                             } else if (p[y][x] == 'O' || p[y][x] == 'X') {
                                 i--;
-                                yourTurn = false;
+                                continue;
                             }
                         }
                         boardToShow.printBoard();
+                        if (playersShipsLeft == 0) {
+                            System.out.println("Game over. Better luck next time");
+                            i = 200;
+                            break;
+                        }
                     }
                 }
             }

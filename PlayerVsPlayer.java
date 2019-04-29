@@ -1,16 +1,16 @@
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class PlayeVsPlayer {
+public class PlayerVsPlayer {
 
     private char[][] p1, p2, p1ToShow, p2ToShow;
     private int player1ShipsLeft = 20;
     private int player2ShipsLeft = 20;
     private boolean player1Turn = true;
-    PlayerImpl player1_board, player2_board, player1_boardToShow, player2_boardToshow;
+    private PlayerImpl player1_board, player2_board, player1_boardToShow, player2_boardToshow;
 
 
-    public PlayeVsPlayer() {
+    public PlayerVsPlayer() {
         p1 = new char[10][10];
         p2 = new char[10][10];
         p1ToShow = new char[10][10];
@@ -46,13 +46,13 @@ public class PlayeVsPlayer {
         for (int i = 0; i < 200; i++){
             while (player1Turn){
                 System.out.println(name1 + "'s turn to attack. Give the position to attack");
-                System.out.println("On vertical axis (1-10):");
+                System.out.println("On vertical axis");
                 String yAx = scan.nextLine();
                 while (!player1_board.isInteger(yAx)){
                     yAx = scan.nextLine();
                 }
                 int y = Integer.parseInt(yAx) - 1;
-                System.out.println("On horizontal axis (a-j):");
+                System.out.println("On horizontal axis (a-j)");
                 int x = Character.toLowerCase(scan.next().charAt(0)) - 97;
 
                 if (y > 9 || y < 0 || x > 9 || x < 0) {
@@ -90,13 +90,13 @@ public class PlayeVsPlayer {
             }
             while (!player1Turn){
                 System.out.println(name2 + "'s turn to attack. Give the position to attack");
-                System.out.println("On vertical axis (1-10):");
+                System.out.println("On vertical axis");
                 String yAx = scan.nextLine();
                 while (!player2_board.isInteger(yAx)){
                     yAx = scan.nextLine();
                 }
                 int y = Integer.parseInt(yAx) - 1;
-                System.out.println("On horizontal axis (a-j):");
+                System.out.println("On horizontal axis (a-j)");
                 int x = Character.toLowerCase(scan.next().charAt(0)) - 97;
 
                 if (y > 9 || y < 0 || x > 9 || x < 0) {

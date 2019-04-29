@@ -19,10 +19,11 @@ public class PlayerImpl {
             return true; //Return true if it works
         }
         catch( Exception e ) {
-            System.out.println("You should choose from 1-10!");
+            System.out.println("Remember, only from 1-10 (Even without space)!");
             return false; //If it doesn't work return false
         }
     }
+
 
     public void printBoard (String player){
         System.out.println("\nPlayer's" + " " + player + " board");
@@ -93,14 +94,15 @@ public class PlayerImpl {
             }
 
             System.out.println("Nice choice! Now please choose where to start to put");
-            System.out.println("Firstly choose on vertical direction (1-10)");
+            System.out.println("Firstly choose on vertical direction");
 
             int Vertdir = -1;
             while (Vertdir < 0 || Vertdir > 10) {
-                String l = scan.nextLine();
+                String l = scan.next();
                 if (isInteger(l)){
                     Vertdir = Integer.parseInt(l);
                 }
+                System.out.println("Only 1-10, don't forget!");
             }
             System.out.println("For now choose on horizontal direction (a-j)");
             char H = scan.next().charAt(0);
