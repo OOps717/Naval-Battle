@@ -15,7 +15,7 @@ public class Client
     private PlayerImpl player1_board, player2_board;
 
     public Client() {
-        p1 = new char[10][10];
+        p1 = new char[10][10];//
         p2 = new char[10][10];
         player1_board = new PlayerImpl(p1);
         player2_board = new PlayerImpl(p2);
@@ -43,7 +43,7 @@ public class Client
 
     private static Socket socket;
 
-    public void client(String host) throws InterruptedException, IOException {
+    public void client(String host) throws InterruptedException, IOException {  //Check for comments in Server class
         int shipsLeft = 20, yourShipsLeft = 20;
         boolean check = true;
         Scanner scan = new Scanner(System.in);
@@ -65,9 +65,8 @@ public class Client
             msgin = inputStream.readUTF();
             char[][] p2Real = splitToBoard(msgin);
             for (int i = 0; i < 10; i++) {
-                for (int j = 0; j < 10; j++) {
+                for (int j = 0; j < 10; j++)
                     msgout += p1[i][j];
-                }
             }
             outputStream.writeUTF(msgout);
             outputStream.flush();

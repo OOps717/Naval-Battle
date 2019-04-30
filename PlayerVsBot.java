@@ -45,9 +45,9 @@ public class PlayerVsBot {
             System.out.println();
 
             boardToShow.printBoard();
-            if (level == 'e') {
+            if (level == 'e') { //Random cell attacking
                 for (int i = 0; i < 200; i++) {
-                    while (yourTurn) {
+                    while (yourTurn) {  //Players turn
                         System.out.println("Your turn to attack. Give the position to attack");
                         System.out.println("On vertical axis (1-10):");
                         String yAx = scan.next();
@@ -61,9 +61,8 @@ public class PlayerVsBot {
                         if (y > 9 || y < 0 || x > 9 || x < 0) {
                             System.out.println("Out of bounds, try again");
                             i--;
-                            yourTurn = true;
                             continue;
-                        } else if (b[y][x] == '#' && bToShow[y][x] != 'X') {
+                        } else if (b[y][x] == '#' && bToShow[y][x] != 'X') { //User hits. Continue hitting
                             System.out.println("Hit! Continue in the same way.");
                             bToShow[y][x] = 'X';
                             boardToShow.printBoard();
@@ -73,8 +72,7 @@ public class PlayerVsBot {
                                 i = 200;
                                 break;
                             }
-                            yourTurn = true;
-                        } else if (b[y][x] == '-' && bToShow[y][x] != 'O') {
+                        } else if (b[y][x] == '-' && bToShow[y][x] != 'O') { //Miss, turn goes to bot
                             System.out.println("Miss :(");
                             bToShow[y][x] = 'O';
                             boardToShow.printBoard();
@@ -83,7 +81,6 @@ public class PlayerVsBot {
                             System.out.println("You already attacked this point, try again");
                             boardToShow.printBoard();
                             i--;
-                            yourTurn = true;
                         }
 
                         player_board.printBoard(name);
@@ -98,14 +95,13 @@ public class PlayerVsBot {
                             p[y][x] = 'X';
                             player_board.printBoard(name);
                             playersShipsLeft--;
-                            yourTurn = false;
                         } else if (p[y][x] == '-' && p[y][x] != 'O') {
                             p[y][x] = 'O';
                             player_board.printBoard(name);
                             yourTurn = true;
                         } else if (p[y][x] == 'O' || p[y][x] == 'X') {
                             i--;
-                            yourTurn = false;
+                            continue;
                         }
                         boardToShow.printBoard();
                         if (playersShipsLeft == 0) {
@@ -115,7 +111,7 @@ public class PlayerVsBot {
                         }
                     }
                 }
-            }else {
+            }else { //Consequent cell attacking
                 for (int i = 0; i < 200; i++) {
                     while (yourTurn) {
                         System.out.println("Your turn to attack. Give the position to attack");
@@ -131,7 +127,6 @@ public class PlayerVsBot {
                         if (y > 9 || y < 0 || x > 9 || x < 0) {
                             System.out.println("Out of bounds, try again");
                             i--;
-                            yourTurn = true;
                             continue;
                         } else if (b[y][x] == '#' && bToShow[y][x] != 'X') {
                             System.out.println("Hit! Continue in the same way.");
@@ -143,7 +138,6 @@ public class PlayerVsBot {
                                 i = 200;
                                 break;
                             }
-                            yourTurn = true;
                         } else if (b[y][x] == '-' && bToShow[y][x] != 'O') {
                             System.out.println("Miss :(");
                             bToShow[y][x] = 'O';
@@ -153,7 +147,6 @@ public class PlayerVsBot {
                             System.out.println("You already attacked this point, try again");
                             boardToShow.printBoard();
                             i--;
-                            yourTurn = true;
                         }
 
                         player_board.printBoard(name);
@@ -166,53 +159,45 @@ public class PlayerVsBot {
                                 p[yPos][xPos] = 'X';
                                 playersShipsLeft--;
                                 player_board.printBoard(name);
-                                yourTurn = false;
                             } else if (yPos != 9 && xPos != 9 && p[yPos + 1][xPos + 1] != 'O' && p[yPos + 1][xPos + 1] != 'X' && p[yPos + 1][xPos + 1] == '#') {
                                 yPos = yPos + 1;
                                 xPos = xPos + 1;
                                 p[yPos][xPos] = 'X';
                                 playersShipsLeft--;
                                 player_board.printBoard(name);
-                                yourTurn = false;
                             } else if (xPos != 9 && p[yPos][xPos + 1] != 'O' && p[yPos][xPos + 1] != 'X' && p[yPos][xPos + 1] == '#') {
                                 xPos = xPos + 1;
                                 p[yPos][xPos] = 'X';
                                 playersShipsLeft--;
                                 player_board.printBoard(name);
-                                yourTurn = false;
                             } else if (yPos != 0 && xPos != 9 && p[yPos - 1][xPos + 1] != 'O' && p[yPos - 1][xPos + 1] != 'X' && p[yPos - 1][xPos + 1] == '#') {
                                 yPos = yPos - 1;
                                 xPos = xPos + 1;
                                 p[yPos][xPos] = 'X';
                                 playersShipsLeft--;
                                 player_board.printBoard(name);
-                                yourTurn = false;
                             } else if (yPos != 9 && xPos != 0 && p[yPos + 1][xPos - 1] != 'O' && p[yPos + 1][xPos - 1] != 'X' && p[yPos + 1][xPos - 1] == '#') {
                                 yPos = yPos + 1;
                                 xPos = xPos - 1;
                                 p[yPos][xPos] = 'X';
                                 playersShipsLeft--;
                                 player_board.printBoard(name);
-                                yourTurn = false;
                             } else if (yPos != 0 && xPos != 0 && p[yPos - 1][xPos - 1] != 'O' && p[yPos - 1][xPos - 1] != 'X' && p[yPos - 1][xPos - 1] == '#') {
                                 yPos = yPos - 1;
                                 xPos = xPos - 1;
                                 p[yPos][xPos] = 'X';
                                 playersShipsLeft--;
                                 player_board.printBoard(name);
-                                yourTurn = false;
                             } else if (xPos != 0 && p[yPos][xPos - 1] != 'O' && p[yPos][xPos - 1] != 'X' && p[yPos][xPos - 1] == '#') {
                                 xPos = xPos - 1;
                                 p[yPos][xPos] = 'X';
                                 playersShipsLeft--;
                                 player_board.printBoard(name);
-                                yourTurn = false;
                             } else if (yPos != 0 && p[yPos - 1][xPos] != 'O' && p[yPos - 1][xPos] != 'X' && p[yPos - 1][xPos] == '#') {
                                 yPos = yPos - 1;
                                 p[yPos][xPos] = 'X';
                                 playersShipsLeft--;
                                 player_board.printBoard(name);
-                                yourTurn = false;
                             } else {
                                 xPos = -1;
                                 yPos = -1;
@@ -229,7 +214,6 @@ public class PlayerVsBot {
                                 xPos = x;
                                 player_board.printBoard(name);
                                 playersShipsLeft--;
-                                yourTurn = false;
                             } else if (p[y][x] == '-' && p[y][x] != 'O') {
                                 p[y][x] = 'O';
                                 player_board.printBoard(name);

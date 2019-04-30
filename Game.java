@@ -17,7 +17,7 @@ public class Game {
     public static void main (String [] arg) throws InterruptedException, IOException {
         Scanner scan = new Scanner(System.in);
         System.out.println("Hello ladies and gentlemen, welcome to the Battle ship!");
-        System.out.println("Choose the mode of playing (1 - player vs computer, 2 - player vs player, 3 - player vs player (locally), 4 - player vs player (online))");
+        System.out.println("Choose the mode of playing (1 - player vs computer, 2 - player vs player (same device), 3 - player vs player (locally), 4 - player vs player (online))");
         String ch = scan.nextLine();
         int choice;
         while (!isInteger(ch) && (!ch.equals("1") || !ch.equals("2") || !ch.equals("3") || !ch.equals("4"))){

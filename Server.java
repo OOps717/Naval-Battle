@@ -88,8 +88,8 @@ public class Server
                 char[] msg = split(msgin);
 
                 if (msg[1] == '0') {
-                    System.out.println("Player 2 attacked: " + msg[0] + msg[1] + " " + msg[3]);
-                    if (p1[10][msg[3] - 97] == '#') {
+                    System.out.println("Player 2 attacked: " + msg[0] + msg[1] + " " + msg[3]); //if Vertical position is 10
+                    if (p1[10][msg[3] - 97] == '#') { //if Player 2 hit
                         System.out.println("Ouch");
                         p1[10][msg[3] - 97] = 'X';
                         player1_board.printBoard(name);
@@ -100,7 +100,7 @@ public class Server
                             break;
                         }
                         check = false;
-                    } else if (p1[10][msg[3] - 97] == '-') {
+                    } else if (p1[10][msg[3] - 97] == '-') { //if miss
                         System.out.println("Lucky!");
                         p1[10][msg[3] - 97] = 'O';
                         player1_board.printBoard(name);
@@ -108,7 +108,7 @@ public class Server
                         check = true;
                     }
                 } else {
-                    System.out.println("Player 2 attacked: " + msg[0] + " " + msg[2]);
+                    System.out.println("Player 2 attacked: " + msg[0] + " " + msg[2]); //Same if vertical direction <10
                     if (p1[msg[0] - '1'][msg[2] - 97] == '#') {
                         System.out.println("Ouch");
                         p1[msg[0] - '1'][msg[2] - 97] = 'X';
@@ -125,14 +125,14 @@ public class Server
                         check = true;
                     }
                 }
-                if (yourShipsLeft == 0){
+                if (yourShipsLeft == 0){ //Case of loosing
                     System.out.println("Game over, better luck next time!");
                     break;
                 }
 
 
                 while (check) {
-                    System.out.println("Give the position to attack on Vertical axis (or looser for exiting)");
+                    System.out.println("Give the position to attack on Vertical axis (or looser for exiting)");//Checking coordinates after
                     String yAx = scan.next();
                     while (!player1_board.isInteger(yAx)) {
                         yAx = scan.next();
@@ -146,7 +146,8 @@ public class Server
                     if (y > 9 || y < 0 || x > 9 || x < 0) {
                         System.out.println("Out of bounds, try again");
                         continue;
-                    } else if (p2[y][x] == 'X' || p2[y][x] == 'O') {
+                    }  //Attacking cells and checks if hit or not
+                    else if (p2[y][x] == 'X' || p2[y][x] == 'O') {
                         System.out.println("You've already check this cell, try again");
                         player2_board.printBoard("2");
                         continue;
@@ -168,7 +169,7 @@ public class Server
                     outputStream.flush();
                 }
 
-                if (shipsLeft == 0) {
+                if (shipsLeft == 0) {  //Case if player 1 hit all the ships
                     System.out.println("You won! Congrats!");
                     break;
                 }

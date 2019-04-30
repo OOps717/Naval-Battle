@@ -38,7 +38,7 @@ public class AIplaceImpl {
         while ( S1!=0 || S2!=0 || S3!=0 || S4!=0 ) {
             String chars = "1234";
             Random rnd = new Random();
-            char ShipCell = chars.charAt(rnd.nextInt(chars.length()));
+            char ShipCell = chars.charAt(rnd.nextInt(chars.length()));      //Randomly choose the ship
             if ((ShipCell=='1' && S1==0) || (ShipCell=='2' && S2==0) || (ShipCell=='3' && S3==0) || (ShipCell=='4' && S4==0)) continue;
             switch (ShipCell) {
                 case '1':
@@ -55,117 +55,104 @@ public class AIplaceImpl {
                     break;
             }
 
-            int Vertdir = rnd.nextInt(11);
-            if (Vertdir == 0) Vertdir ++;
+            int Vertdir = rnd.nextInt(10);      //Choosing random coordinates from 1-10 (0-9) and from a-j (0-9)
             String hor = "abcdefghij";
             char H = hor.charAt((rnd.nextInt(hor.length())));
-            int Horizdir = H - 96;
+            int Horizdir = H - 97;
 
             if (ShipCell == '1'){
-                if(board[Vertdir-1][Horizdir-1] == '#') S1++;
+                if(board[Vertdir][Horizdir] == '#') S1++;
                 else {
-                    board[Vertdir - 1][Horizdir - 1] = '#';
+                    board[Vertdir][Horizdir] = '#';
                 }
             }
             else{
                 String direction = "lrud";
-                char Dir = direction.charAt(rnd.nextInt(direction.length()));
-                if (Dir == 'l'){
-                    if((Horizdir <= 3 && ShipCell == '4') || (Horizdir <= 2 && ShipCell == '3') || (Horizdir <= 1 && ShipCell == '2')){
+                char Dir = direction.charAt(rnd.nextInt(direction.length()));       //Random choosing of direction
+                if (Dir == 'l'){ //Putting in left direction and checking if everything is okay (like in PlayerImpl)
+                    if((Horizdir <= 2 && ShipCell == '4') || (Horizdir <= 1 && ShipCell == '3') || (Horizdir <= 0 && ShipCell == '2')){
                         if (ShipCell == '2') S2++;
-                        if (ShipCell == '3') S3++;
-                        if (ShipCell == '4') S4++;
+                        else if (ShipCell == '3') S3++;
+                        else if (ShipCell == '4') S4++;
                     }
                     else {
-                        for (int i = Horizdir - 1; i > Horizdir - Character.getNumericValue(ShipCell) - 1; i--) {
-                            if (board[Vertdir - 1][i] == '#') {
-                                okay = false;
-                            }
+                        for (int i = Horizdir; i > Horizdir - Character.getNumericValue(ShipCell); i--) {
+                            if (board[Vertdir][i] == '#') okay = false;
                         }
                         if (okay){
-                            for (int i = Horizdir - 1; i > Horizdir - Character.getNumericValue(ShipCell) - 1; i--) {
-                                board[Vertdir - 1][i] = '#';
-                            }
+                            for (int i = Horizdir; i > Horizdir - Character.getNumericValue(ShipCell); i--)
+                                board[Vertdir][i] = '#';
                         }
                         else{
                             if (ShipCell == '2') S2++;
-                            if (ShipCell == '3') S3++;
-                            if (ShipCell == '4') S4++;
+                            else if (ShipCell == '3') S3++;
+                            else if (ShipCell == '4') S4++;
                             okay = true;
                         }
                     }
                 }
-                if (Dir == 'r'){
-                    if ((Horizdir >= 8 && ShipCell == '4') || (Horizdir >= 9 && ShipCell == '3') || (Horizdir >= 10 && ShipCell == '2')){
+                if (Dir == 'r'){ //Putting in right direction and checking if everything is okay (like in PlayerImpl)
+                    if ((Horizdir >= 7 && ShipCell == '4') || (Horizdir >= 8 && ShipCell == '3') || (Horizdir >= 9 && ShipCell == '2')){
                         if (ShipCell == '2') S2++;
-                        if (ShipCell == '3') S3++;
-                        if (ShipCell == '4') S4++;
+                        else if (ShipCell == '3') S3++;
+                        else if (ShipCell == '4') S4++;
                     }
                     else{
-                        for (int i = Horizdir - 1; i < Horizdir + Character.getNumericValue(ShipCell) - 1; i++) {
-                            if (board[Vertdir - 1][i] == '#') {
-                                okay = false;
-                            }
+                        for (int i = Horizdir; i < Horizdir + Character.getNumericValue(ShipCell); i++) {
+                            if (board[Vertdir][i] == '#') okay = false;
                         }
                         if (okay){
-                            for (int i = Horizdir - 1; i < Horizdir + Character.getNumericValue(ShipCell) - 1; i++) {
-                                board[Vertdir - 1][i] = '#';
-                            }
+                            for (int i = Horizdir; i < Horizdir + Character.getNumericValue(ShipCell); i++)
+                                board[Vertdir][i] = '#';
                         }
                         else{
                             if (ShipCell == '2') S2++;
-                            if (ShipCell == '3') S3++;
-                            if (ShipCell == '4') S4++;
+                            else if (ShipCell == '3') S3++;
+                            else if (ShipCell == '4') S4++;
                             okay = true;
                         }
                     }
                 }
-                if (Dir == 'd'){
-                    if ((Vertdir >= 8 && ShipCell == '4') || (Vertdir >= 9 && ShipCell == '3') || (Vertdir == 10 && ShipCell == '2')){
+                if (Dir == 'd'){ //Putting in down direction and checking if everything is okay (like in PlayerImpl)
+                    if ((Vertdir >= 7 && ShipCell == '4') || (Vertdir >= 8 && ShipCell == '3') || (Vertdir == 9 && ShipCell == '2')){
                         if (ShipCell == '2') S2++;
-                        if (ShipCell == '3') S3++;
-                        if (ShipCell == '4') S4++;
+                        else if (ShipCell == '3') S3++;
+                        else if (ShipCell == '4') S4++;
                     }
                     else {
 
-                        for (int i = Vertdir - 1; i < Vertdir - 1 + Character.getNumericValue(ShipCell); i++) {
-                            if (board[i][Horizdir - 1] == '#') {
-                                okay = false;
-                            }
+                        for (int i = Vertdir; i < Vertdir + Character.getNumericValue(ShipCell); i++) {
+                            if (board[i][Horizdir] == '#') okay = false;
                         }
                         if(okay){
-                            for (int i = Vertdir - 1; i < Vertdir - 1 + Character.getNumericValue(ShipCell); i++) {
-                                board[i][Horizdir - 1] = '#';
-                            }
+                            for (int i = Vertdir; i < Vertdir + Character.getNumericValue(ShipCell); i++)
+                                board[i][Horizdir] = '#';
                         }
                         else{
                             if (ShipCell == '2') S2++;
-                            if (ShipCell == '3') S3++;
-                            if (ShipCell == '4') S4++;
+                            else if (ShipCell == '3') S3++;
+                            else if (ShipCell == '4') S4++;
                             okay = true;
                         }
                     }
                 }
 
-                if (Dir == 'u'){
-                    if ((Vertdir <= 3 && ShipCell == '4') || (Vertdir <= 2 && ShipCell == '3') || (Vertdir <= 1 && ShipCell == '2')){
+                if (Dir == 'u'){ //Putting in up direction and checking if everything is okay (like in PlayerImpl)
+                    if ((Vertdir <= 2 && ShipCell == '4') || (Vertdir <= 1 && ShipCell == '3') || (Vertdir <= 0 && ShipCell == '2')){
                         if (ShipCell == '2') S2++;
-                        if (ShipCell == '3') S3++;
-                        if (ShipCell == '4') S4++;
+                        else if (ShipCell == '3') S3++;
+                        else if (ShipCell == '4') S4++;
                     }
                     else {
-                        for (int i = Vertdir - 1; i > Vertdir - 1 - Character.getNumericValue(ShipCell); i--) {
-                            if (board[i][Horizdir - 1] == '#') okay = false;
-                        }
+                        for (int i = Vertdir; i > Vertdir - Character.getNumericValue(ShipCell); i--)
+                            if (board[i][Horizdir] == '#') okay = false;
                         if (okay) {
-                            for (int i = Vertdir - 1; i > Vertdir - 1 - Character.getNumericValue(ShipCell); i--) {
-                                board[i][Horizdir - 1] = '#';
-                            }
+                            for (int i = Vertdir; i > Vertdir - Character.getNumericValue(ShipCell); i--) board[i][Horizdir] = '#';
                         }
                         else{
                             if (ShipCell == '2') S2++;
-                            if (ShipCell == '3') S3++;
-                            if (ShipCell == '4') S4++;
+                            else if (ShipCell == '3') S3++;
+                            else if (ShipCell == '4') S4++;
                             okay = true;
                         }
                     }

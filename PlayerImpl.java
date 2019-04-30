@@ -64,8 +64,7 @@ public class PlayerImpl {
                     "Enter 2 for choosing 2-celled ship\n" +
                     "Enter 1 for choosing 1-celled ship\n");
 
-            char ShipCell = scan.next().charAt(0);
-
+            char ShipCell = scan.next().charAt(0); //Getting ship and checking if it is possible
             if ((ShipCell == '1' && S1 == 0) || (ShipCell == '2' && S2 == 0) || (ShipCell == '3' && S3 == 0) || (ShipCell == '4' && S4 == 0)) {
                 System.out.println("You've already put enough qty of ships, try again");
                 continue;
@@ -96,7 +95,7 @@ public class PlayerImpl {
             System.out.println("Nice choice! Now please choose where to start to put");
             System.out.println("Firstly choose on vertical direction");
 
-            int Vertdir = -1;
+            int Vertdir = -1;                                                                                                   //Getting Vertical coordinate of the cell to put
             while (Vertdir < 0 || Vertdir > 10) {
                 String l = scan.next();
                 if (isInteger(l)){
@@ -104,8 +103,9 @@ public class PlayerImpl {
                 }
                 System.out.println("Only 1-10, don't forget!");
             }
+
             System.out.println("For now choose on horizontal direction (a-j)");
-            char H = scan.next().charAt(0);
+            char H = scan.next().charAt(0);                                                                                     //Getting Horizontal coordinate of the cell to put
             H = Character.toLowerCase(H);
             while (H < 97 || H > 106) {
                 System.out.println("You should choose only from a-j! Try again");
@@ -114,94 +114,83 @@ public class PlayerImpl {
             }
             Horizdir = H - 96;
 
-            if (ShipCell == '1') {
-                if (board[Vertdir - 1][Horizdir - 1] == '#') {
+            if (ShipCell == '1') {      //Put 1-celled ship
+                if (board[Vertdir - 1][Horizdir - 1] == '#') {                                                                  //If the cell is occupied user tries again
                     System.out.println("This cell is already occupied, try again");
                     S1++;
-                } else {
-                    board[Vertdir - 1][Horizdir - 1] = '#';
-                }
+                } else board[Vertdir - 1][Horizdir - 1] = '#';                                                                  //If it is not occupied then put
             } else {
 
 
                 System.out.println("Choose l, r, u or d to choose direction left, right, up or down");
                 char Dir = scan.next().charAt(0);
-                Dir = Character.toLowerCase(Dir);
+                Dir = Character.toLowerCase(Dir);   //Getting direction to put and check if it is appropriate
                 while (Dir != 'l' && Dir != 'r' && Dir != 'u' && Dir != 'd') {
                     System.out.println("Only l, r, u or d");
                     Dir = scan.next().charAt(0);
                     Dir = Character.toLowerCase(Dir);
                 }
-                if (Dir == 'l') {
+                if (Dir == 'l') {   //Putting in left direction
                     if ((Horizdir <= 3 && ShipCell == '4') || (Horizdir <= 2 && ShipCell == '3') || (Horizdir <= 1 && ShipCell == '2')) {
-                        System.out.println("Not appropriate direction to set at this cell, try again");
+                        System.out.println("Not appropriate direction to set at this cell, try again");                         //if the ship goes out of bounds
                         if (ShipCell == '2') S2++;
-                        if (ShipCell == '3') S3++;
-                        if (ShipCell == '4') S4++;
+                        else if (ShipCell == '3') S3++;
+                        else if (ShipCell == '4') S4++;
                     } else {
-                        for (int i = Horizdir - 1; i > Horizdir - Character.getNumericValue(ShipCell) - 1; i--) {
-                            if (board[Vertdir - 1][i] == '#') {
-                                okay = false;
-                            }
+                        for (int i = Horizdir - 1; i > Horizdir - Character.getNumericValue(ShipCell) - 1; i--) {               //False if any other ship is there
+                            if (board[Vertdir - 1][i] == '#') okay = false;
                         }
-                        if (okay) {
-                            for (int i = Horizdir - 1; i > Horizdir - Character.getNumericValue(ShipCell) - 1; i--) {
+                        if (okay) {                                                                                             //If everything is okay, put ship
+                            for (int i = Horizdir - 1; i > Horizdir - Character.getNumericValue(ShipCell) - 1; i--)
                                 board[Vertdir - 1][i] = '#';
-                            }
-                        } else {
+                        } else {                                                                                                //Case if not okay
                             System.out.println("Whopps, the other ship is alredy placed there! Try again");
                             if (ShipCell == '2') S2++;
-                            if (ShipCell == '3') S3++;
-                            if (ShipCell == '4') S4++;
+                            else if (ShipCell == '3') S3++;
+                            else if (ShipCell == '4') S4++;
                             okay = true;
                         }
                     }
                 }
 
-                if (Dir == 'r') {
+                if (Dir == 'r') {   //Putting in right direction
                     if ((Horizdir >= 8 && ShipCell == '4') || (Horizdir >= 9 && ShipCell == '3') || (Horizdir >= 10 && ShipCell == '2')) {
-                        System.out.println("Not appropriate direction to set at this cell, try again");
+                        System.out.println("Not appropriate direction to set at this cell, try again");                         //If the ship goes out of bounds
                         if (ShipCell == '2') S2++;
-                        if (ShipCell == '3') S3++;
-                        if (ShipCell == '4') S4++;
+                        else if (ShipCell == '3') S3++;
+                        else if (ShipCell == '4') S4++;
                     } else {
                         for (int i = Horizdir - 1; i < Horizdir + Character.getNumericValue(ShipCell) - 1; i++) {
-                            if (board[Vertdir - 1][i] == '#') {
-                                okay = false;
-                            }
+                            if (board[Vertdir - 1][i] == '#') okay = false;                                                     //False if any other ship is there
                         }
                         if (okay) {
-                            for (int i = Horizdir - 1; i < Horizdir + Character.getNumericValue(ShipCell) - 1; i++) {
-                                board[Vertdir - 1][i] = '#';
-                            }
+                            for (int i = Horizdir - 1; i < Horizdir + Character.getNumericValue(ShipCell) - 1; i++)
+                                board[Vertdir - 1][i] = '#';                                                                    //If everything is okay, put ship
                         } else {
-                            System.out.println("Whopps, the other ship is alredy placed there! Try again");
+                            System.out.println("Whopps, the other ship is alredy placed there! Try again");                     //Case if not okay
                             if (ShipCell == '2') S2++;
-                            if (ShipCell == '3') S3++;
-                            if (ShipCell == '4') S4++;
+                            else if (ShipCell == '3') S3++;
+                            else if (ShipCell == '4') S4++;
                             okay = true;
                         }
                     }
                 }
-                if (Dir == 'd') {
+                if (Dir == 'd') {   //Putting in down direction
                     if ((Vertdir >= 8 && ShipCell == '4') || (Vertdir >= 9 && ShipCell == '3') || (Vertdir == 10 && ShipCell == '2')) {
-                        System.out.println("Not appropriate direction to set at this cell, try again");
+                        System.out.println("Not appropriate direction to set at this cell, try again");                         //If the ship goes out of bounds
                         if (ShipCell == '2') S2++;
-                        if (ShipCell == '3') S3++;
-                        if (ShipCell == '4') S4++;
+                        else if (ShipCell == '3') S3++;
+                        else if (ShipCell == '4') S4++;
                     } else {
 
                         for (int i = Vertdir - 1; i < Vertdir - 1 + Character.getNumericValue(ShipCell); i++) {
-                            if (board[i][Horizdir - 1] == '#') {
-                                okay = false;
-                            }
+                            if (board[i][Horizdir - 1] == '#') okay = false;                                                    //False if any other ship is there
                         }
                         if (okay) {
-                            for (int i = Vertdir - 1; i < Vertdir - 1 + Character.getNumericValue(ShipCell); i++) {
-                                board[i][Horizdir - 1] = '#';
-                            }
+                            for (int i = Vertdir - 1; i < Vertdir - 1 + Character.getNumericValue(ShipCell); i++)
+                                board[i][Horizdir - 1] = '#';                                                                   //If everything is okay, put ship
                         } else {
-                            System.out.println("Whopps, the other ship is alredy placed there! Try again");
+                            System.out.println("Whopps, the other ship is alredy placed there! Try again");                     //Case if not okay
                             if (ShipCell == '2') S2++;
                             if (ShipCell == '3') S3++;
                             if (ShipCell == '4') S4++;
@@ -210,22 +199,22 @@ public class PlayerImpl {
                     }
                 }
 
-                if (Dir == 'u') {
+                if (Dir == 'u') {   //Putting in up direction
                     if ((Vertdir <= 3 && ShipCell == '4') || (Vertdir <= 2 && ShipCell == '3') || (Vertdir <= 1 && ShipCell == '2')) {
-                        System.out.println("Not appropriate direction to set at this cell, try again");
+                        System.out.println("Not appropriate direction to set at this cell, try again");                         //If the ship goes out of bounds
                         if (ShipCell == '2') S2++;
                         if (ShipCell == '3') S3++;
                         if (ShipCell == '4') S4++;
                     } else {
                         for (int i = Vertdir - 1; i > Vertdir - 1 - Character.getNumericValue(ShipCell); i--) {
-                            if (board[i][Horizdir - 1] == '#') okay = false;
+                            if (board[i][Horizdir - 1] == '#') okay = false;                                                    //False if any other ship is there
                         }
                         if (okay) {
                             for (int i = Vertdir - 1; i > Vertdir - 1 - Character.getNumericValue(ShipCell); i--) {
-                                board[i][Horizdir - 1] = '#';
+                                board[i][Horizdir - 1] = '#';                                                                   //If everything is okay, put ship
                             }
                         } else {
-                            System.out.println("Whopps, the other ship is alredy placed there! Try again");
+                            System.out.println("Whopps, the other ship is alredy placed there! Try again");                     //Case if not okay
                             if (ShipCell == '2') S2++;
                             if (ShipCell == '3') S3++;
                             if (ShipCell == '4') S4++;
@@ -235,7 +224,7 @@ public class PlayerImpl {
                 }
             }
 
-            printBoard(player);
+            printBoard(player); //Print the board after putting
         }
         return board;
     }

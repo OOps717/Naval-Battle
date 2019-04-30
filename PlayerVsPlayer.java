@@ -6,7 +6,7 @@ public class PlayerVsPlayer {
     private char[][] p1, p2, p1ToShow, p2ToShow;
     private int player1ShipsLeft = 20;
     private int player2ShipsLeft = 20;
-    private boolean player1Turn = true;
+    private boolean player1Turn = true; //To check whose turn
     private PlayerImpl player1_board, player2_board, player1_boardToShow, player2_boardToshow;
 
 
@@ -25,7 +25,6 @@ public class PlayerVsPlayer {
     public void play() throws InterruptedException {
         Scanner scan = new Scanner(System.in);
         System.out.println("Hello guys! Give me your names!");
-
         System.out.println("Let's start with player 1, give me your name and place the ships");
 
         String name1 = scan.nextLine();
@@ -58,37 +57,34 @@ public class PlayerVsPlayer {
                 if (y > 9 || y < 0 || x > 9 || x < 0) {
                     System.out.println("Out of bounds, try again");
                     i--;
-                    player1Turn = true;
                     continue;
-                } else if (p2[y][x] == '#' && p2ToShow[y][x] != 'X') {
+                } else if (p2[y][x] == '#' && p2ToShow[y][x] != 'X') {  //If everything is okay and Player hit
                     System.out.println("Hit! Continue in the same way.");
                     p2ToShow[y][x] = 'X';
                     player2_boardToshow.printBoard(name2);
                     player2ShipsLeft--;
                     player1_board.printBoard(name1);
                     if (player2ShipsLeft == 0) {
-                        System.out.println(name1 + " has won, congrats");
+                        System.out.println(name1 + " has won, congrats");//If Player 2 has no ships left
                         i = 200;
                         break;
                     }
-                    player1Turn = true;
-                } else if (p2[y][x] == '-' && p2ToShow[y][x] != 'O') {
+                } else if (p2[y][x] == '-' && p2ToShow[y][x] != 'O') { //If miss
                     System.out.println("Miss :(");
                     p2ToShow[y][x] = 'O';
                     player2_boardToshow.printBoard(name2);
                     player1Turn = false;
                     player1_board.printBoard(name1);
                     TimeUnit.SECONDS.sleep(3);
-                    for(int j = 0; j < 70; j++) System.out.println();
+                    for(int j = 0; j < 70; j++) System.out.println(); //To hide the board in case if miss, change turns
                 } else if (p2[y][x] == 'O' || p2[y][x] == 'X') {
                     System.out.println("You already attacked this point, try again");
                     player2_boardToshow.printBoard(name2);
                     i--;
-                    player1Turn = true;
                     player1_board.printBoard(name1);
                 }
             }
-            while (!player1Turn){
+            while (!player1Turn){ //Almost same actions for player 2
                 System.out.println(name2 + "'s turn to attack. Give the position to attack");
                 System.out.println("On vertical axis");
                 String yAx = scan.nextLine();
@@ -102,7 +98,6 @@ public class PlayerVsPlayer {
                 if (y > 9 || y < 0 || x > 9 || x < 0) {
                     System.out.println("Out of bounds, try again");
                     i--;
-                    player1Turn = false;
                     continue;
                 } else if (p1[y][x] == '#' && p1ToShow[y][x] != 'X') {
                     System.out.println("Hit! Continue in the same way.");
@@ -115,7 +110,6 @@ public class PlayerVsPlayer {
                         i=200;
                         break;
                     }
-                    player1Turn = false;
                 } else if (p1[y][x] == '-' && p1ToShow[y][x] != 'O') {
                     System.out.println("Miss :(");
                     p1ToShow[y][x] = 'O';
@@ -128,7 +122,6 @@ public class PlayerVsPlayer {
                     System.out.println("You already attacked this point, try again");
                     player1_boardToShow.printBoard(name1);
                     i--;
-                    player1Turn = false;
                     player2_board.printBoard(name2);
                 }
             }
