@@ -10,9 +10,9 @@ public class PlayerVsBot {
     private int shipsLeft = 20;
     private int playersShipsLeft = 20;
     private boolean yourTurn = true;
-    PlayerImpl player_board;
-    AIplaceImpl board;
-    AIplaceImpl boardToShow;
+    private PlayerImpl player_board;
+    private AIplaceImpl board;
+    private AIplaceImpl boardToShow;
 
     public PlayerVsBot() {
         b = new char[10][10];
