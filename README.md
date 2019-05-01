@@ -1,5 +1,5 @@
 # Battleship game.
-This version of battleship is made on Java programming language. It is satisfied for 4 mode of games (locally, online, on one device player vs player, and bot vs player)\
+This version of battleship is made on Java programming language. It is satisfied for 4 mode of games (locally, online, on one device player vs player, and bot vs player)
 
 ## Running
  ```
